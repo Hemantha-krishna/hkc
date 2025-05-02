@@ -25,7 +25,7 @@ const Index = () => {
       canvas.style.left = '0';
       canvas.style.width = '100%';
       canvas.style.height = '100%';
-      canvas.style.opacity = '0.02';
+      canvas.style.opacity = '0.015';
       canvas.style.pointerEvents = 'none';
       canvas.style.zIndex = '-1';
       
@@ -62,15 +62,20 @@ const Index = () => {
   
   return (
     <div className="min-h-screen bg-cyber-dark text-foreground relative overflow-hidden">
-      {/* Digital circuit lines in the background */}
-      <div className="fixed inset-0 pointer-events-none z-0 opacity-5">
-        <div className="absolute top-0 left-0 w-full h-full cyber-grid"></div>
-        <div className="absolute top-1/4 left-0 w-full h-px bg-blue-500/30"></div>
-        <div className="absolute top-2/4 left-0 w-full h-px bg-blue-500/30"></div>
-        <div className="absolute top-3/4 left-0 w-full h-px bg-blue-500/30"></div>
-        <div className="absolute top-0 left-1/4 h-full w-px bg-blue-500/30"></div>
-        <div className="absolute top-0 left-2/4 h-full w-px bg-blue-500/30"></div>
-        <div className="absolute top-0 left-3/4 h-full w-px bg-blue-500/30"></div>
+      {/* Modern background elements */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        {/* Gradients */}
+        <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-bl from-blue-900/10 via-transparent to-transparent"></div>
+        <div className="absolute bottom-0 left-0 w-full h-full bg-gradient-to-tr from-blue-900/10 via-transparent to-transparent"></div>
+        
+        {/* Subtle grid with cleaner aesthetic */}
+        <div className="absolute inset-0 cyber-grid opacity-10"></div>
+        
+        {/* Minimal horizontal and vertical lines */}
+        <div className="absolute top-1/3 left-0 w-full h-px bg-blue-500/10"></div>
+        <div className="absolute top-2/3 left-0 w-full h-px bg-blue-500/10"></div>
+        <div className="absolute top-0 left-1/3 h-full w-px bg-blue-500/10"></div>
+        <div className="absolute top-0 left-2/3 h-full w-px bg-blue-500/10"></div>
       </div>
       
       <Navbar />

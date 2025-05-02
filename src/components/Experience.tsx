@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Calendar } from 'lucide-react';
+import { Calendar, MapPin } from 'lucide-react';
 
 const Experience = () => {
   const experiences = [
@@ -23,7 +23,7 @@ const Experience = () => {
       <div className="max-w-screen-xl mx-auto">
         <div className="mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Professional Experience</h2>
-          <div className="h-1 w-20 bg-blue-500 mb-8"></div>
+          <div className="h-1 w-20 bg-gradient-to-r from-blue-500 to-blue-400/50 rounded-full mb-8"></div>
           <p className="text-lg text-foreground/80 max-w-3xl">
             My professional journey and practical experience in web development and cybersecurity.
           </p>
@@ -31,25 +31,28 @@ const Experience = () => {
         
         <div className="space-y-12">
           {experiences.map((exp, index) => (
-            <div key={index} className="bg-card p-8 rounded-lg border border-border hover:border-blue-500/30 transition-all">
+            <div key={index} className="bg-card/70 backdrop-blur-sm p-8 rounded-xl border border-blue-500/10 hover:border-blue-500/30 transition-all shadow-lg shadow-black/20">
               <div className="flex flex-col md:flex-row md:items-center justify-between mb-6">
                 <div>
                   <h3 className="text-xl font-bold">{exp.role}</h3>
                   <p className="text-blue-400">{exp.company}</p>
                 </div>
-                <div className="flex items-center mt-2 md:mt-0 text-foreground/60">
-                  <Calendar size={16} className="mr-2" />
+                <div className="flex items-center mt-2 md:mt-0 text-foreground/60 bg-blue-500/5 px-3 py-1 rounded-full border border-blue-500/10">
+                  <Calendar size={16} className="mr-2 text-blue-400" />
                   <span>{exp.period}</span>
                 </div>
               </div>
               
-              <p className="text-foreground/70 mb-4 italic">{exp.location}</p>
+              <p className="text-foreground/70 mb-4 italic flex items-center">
+                <MapPin size={16} className="mr-2 text-blue-400/70" />
+                {exp.location}
+              </p>
               
               <h4 className="text-sm font-semibold uppercase text-foreground/50 mb-3">Key Responsibilities & Achievements</h4>
               <ul className="space-y-3">
                 {exp.responsibilities.map((item, itemIndex) => (
                   <li key={itemIndex} className="flex">
-                    <span className="inline-block w-2 h-2 mt-2 rounded-full bg-blue-500 mr-3 flex-shrink-0"></span>
+                    <span className="inline-block w-1.5 h-1.5 mt-2 rounded-full bg-blue-500 mr-3 flex-shrink-0"></span>
                     <span className="text-foreground/80">{item}</span>
                   </li>
                 ))}
@@ -59,7 +62,7 @@ const Experience = () => {
         </div>
         
         <div className="flex justify-center mt-12">
-          <div className="border border-blue-500/30 text-center p-6 rounded-lg max-w-2xl">
+          <div className="border border-blue-500/20 bg-blue-500/5 backdrop-blur-sm text-center p-6 rounded-xl max-w-2xl">
             <h4 className="font-semibold mb-2">Looking for Additional Experience?</h4>
             <p className="text-foreground/70">
               I'm eligible to work in the US and actively seeking internship and full-time opportunities 
