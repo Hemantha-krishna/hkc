@@ -1,6 +1,8 @@
 
-import React, { useState } from 'react';
-import { Mail, Phone, Github, Linkedin, ExternalLink } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { Mail, Phone, Github, Linkedin, ExternalLink, Send } from 'lucide-react';
+import emailjs from '@emailjs/browser';
+import { useToast } from "@/hooks/use-toast";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -10,31 +12,66 @@ const Contact = () => {
     message: ''
   });
   
+  const [isLoading, setIsLoading] = useState(false);
   const [formStatus, setFormStatus] = useState<null | 'success' | 'error'>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+  const { toast } = useToast();
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
   
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // In a real implementation, this would send the form data to a backend service
-    console.log("Form data submitted:", formData);
-    setFormStatus('success');
+    setIsLoading(true);
+    setFormStatus(null);
     
-    // Reset form after successful submission
-    setFormData({
-      name: '',
-      email: '',
-      subject: '',
-      message: ''
-    });
-    
-    // Reset status after 5 seconds
-    setTimeout(() => {
-      setFormStatus(null);
-    }, 5000);
+    try {
+      // Initialize EmailJS with public key
+      emailjs.init("4qjxGu2-ID4Cs5UCv");
+      
+      // Send the form data using EmailJS
+      const result = await emailjs.sendForm(
+        "service_lzn8r0e", // Service ID
+        "template_contact", // Template ID - you may need to create this in EmailJS
+        formRef.current as HTMLFormElement
+      );
+      
+      console.log("Email sent successfully:", result.text);
+      setFormStatus('success');
+      
+      // Show success toast
+      toast({
+        title: "Message sent!",
+        description: "Thank you for your message. I'll get back to you soon.",
+      });
+      
+      // Reset form after successful submission
+      setFormData({
+        name: '',
+        email: '',
+        subject: '',
+        message: ''
+      });
+    } catch (error) {
+      console.error("Error sending email:", error);
+      setFormStatus('error');
+      
+      // Show error toast
+      toast({
+        title: "Message failed to send",
+        description: "There was an error sending your message. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+      
+      // Reset status after 5 seconds
+      setTimeout(() => {
+        setFormStatus(null);
+      }, 5000);
+    }
   };
   
   const contactDetails = [
@@ -116,7 +153,7 @@ const Contact = () => {
           
           <div>
             <h3 className="text-2xl font-bold mb-6 text-blue-400">Send Me a Message</h3>
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-foreground/70 mb-1">Name</label>
                 <input 
@@ -171,9 +208,20 @@ const Contact = () => {
               
               <button 
                 type="submit" 
-                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md transition-colors"
+                disabled={isLoading}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md transition-colors flex items-center gap-2 disabled:opacity-70"
               >
-                Send Message
+                {isLoading ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-t-transparent border-white rounded-full animate-spin"></div>
+                    <span>Sending...</span>
+                  </>
+                ) : (
+                  <>
+                    <Send size={18} />
+                    <span>Send Message</span>
+                  </>
+                )}
               </button>
               
               {formStatus === 'success' && (

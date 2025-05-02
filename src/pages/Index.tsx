@@ -7,6 +7,7 @@ import Portfolio from '@/components/Portfolio';
 import Experience from '@/components/Experience';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
+import { Toaster } from "@/components/ui/toaster";
 
 const Index = () => {
   // Scroll to the top when the page loads
@@ -85,6 +86,7 @@ const Index = () => {
       <Experience />
       <Contact />
       <Footer />
+      <Toaster />
     </div>
   );
 };
