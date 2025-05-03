@@ -81,7 +81,7 @@ const Hero = () => {
             
             <div className="relative rounded-full overflow-hidden border-2 border-blue-500/30 w-64 h-64 md:w-80 md:h-80">
               <img
-                src="https://i.postimg.cc/qNVWQpNc/profile-pic.jpg"
+                src="../src/pics/profile.jpg"
                 alt="Hemantha Krishna Challa"
                 className="w-full h-full object-cover"
               />
